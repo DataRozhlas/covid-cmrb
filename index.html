@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+
+<div id="cmrb-kraje"></div> <!--do html assetu s grafem krajů-->
+<div id="cmrb-odvetvi"></div> <!--do html assetu s grafem odvětví-->
+
+<!--odsud dolů zkopírovat do html assetu pod div s druhým grafem v pořadí-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/8.1.0/highcharts.js"></script>
+<script>
+function draw(d) {
+    const cats = d.slice(1).map(val => val[0])
+    const dat = d.slice(1).map(val => val[1])
+    Highcharts.chart(d[0][1], {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Podíl podpořenýc podnikatelů' + d[0][0]
+        },
+        subtitle: {
+            text: 'Zdroj: Českomoravská rozvojová banka'
+        },
+        xAxis: {
+            categories: cats,
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'podíl z podpořených v %'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0"></td>' +
+                '<td style="padding:0"><b>{point.y:.1f} % ze všech podpořených</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'podnikatelé',
+            color: d[0][2],
+            data: dat
+
+        }]
+    })
+}
+
+const odvetvi = [
+  ['dle odvětví', 'cmrb-odvetvi', '#3182bd'],
+  ["zpracovatelský průmysl",35.5],
+  ["maloobchod a velkoobchod",35],
+  ["ubytování, pohostinství",7.5],
+  ["stavebnictví",7],
+  ["doprava",6],
+  ["administrativní činnost",2],
+  ["informační a komunikační  činnost",1.5],
+  ["zdravotní a sociální péče",1.5],
+  ["další obory",4]
+]
+
+const kraje = [
+  ['dle krajů', 'cmrb-kraje', '#de2d26'],
+  ["Jihomoravský",18],
+  ["Moravskoslezský",11],
+  ["Středočeský",9],
+  ["Zlínský",9],
+  ["Olomoucký",8.5],
+  ["Královéhradecký",8.5],
+  ["Pardubický",8],
+  ["Plzeňský",6.5],
+  ["Jihočeský",5.5],
+  ["Vysočina",4],
+  ["Praha",4],
+  ["Ústecký",3.5],
+  ["Liberecký",3.5],
+  ["Karlovarský",1]
+]
+
+draw(odvetvi)
+draw(kraje)
+    
+</script>
